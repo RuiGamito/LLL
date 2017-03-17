@@ -10,7 +10,7 @@ circleSpeed = 300
 
 
 
-
+-- Game Cycle
 function love.load()
   posX = initialPosX
   posY = initialPosY
