@@ -1,4 +1,5 @@
 
+require "cursorMovement"
 
 pos_x = 100
 pos_y = 200
@@ -61,33 +62,6 @@ function love.update()
 end
 
 
--- Movement Functions
-
-function goDown()
-	if pos_y + bsize_y < window_h then
-		pos_y = pos_y + 10
-	end
-end
-
-function goUp()
-
-	if pos_y > 0 then
-		pos_y = pos_y - 10
-	end
-end
-
-function goLeft()
-
-	if pos_x > 0 then
-		pos_x = pos_x - 10
-	end
-end
-
-function goRight()
-	if pos_x + bsize_x < window_w then
-		pos_x = pos_x + 10
-	end
-end
 
 function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
   return x1 < x2+w2 and
