@@ -16,15 +16,20 @@ text = "Press a cursor key"
 text_over = ""
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
+score = 0
 
 
 -- Game Cycle Functions
 
 function love.draw()
     --love.graphics.print(text, 400, 300)
-	love.graphics.print(text_over, 100, 100)
+    love.graphics.print(text_over, 100, 100)
 
-	love.graphics.setColor(0, 0, 255)
+    -- Print the points
+    love.graphics.print("Score: " .. score, 10, 10)
+
+
+    love.graphics.setColor(0, 0, 255)
     love.graphics.rectangle("fill", pos_x, pos_y, bsize_x, bsize_y)
 
     love.graphics.setColor(255, 255, 255)
@@ -34,6 +39,10 @@ function love.draw()
     	text_over = "OUCH!!!!!!!!"
     	block_pos_x = love.math.random(0, window_w - bsize_x)
     	block_pos_y = love.math.random(0, window_h - bsize_y)
+
+      -- If there's a collision with the white box, increase the score
+      score = score + 1
+
     else
     	text_over = ""
     end
