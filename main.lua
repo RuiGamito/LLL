@@ -1,5 +1,4 @@
-
-require "cursorMovement"
+require "hud"
 
 pos_x = 100
 pos_y = 200
@@ -12,31 +11,26 @@ block_pos_y = 500
 window_w = love.graphics.getWidth()
 window_h = love.graphics.getHeight()
 
+hud_height = 30
+
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
-
-score = 0
-session_time = 60 -- 60 seconds to get the highest score
-
 
 -- Game Cycle Functions
 
-
 function love.load()
 
-  -- get the initial time of the session
-  start_time = love.timer.getTime()
-
-
+  -- initialize hud stuff
+  hud:init()
+  hud:set_hud_height(hud_height)
+  hud:toggle_score(true)
+  hud:toggle_timer(true)
+  hud:set_session_time(60)
+  hud:set_start_time()
 end
 
 function love.draw()
 
-    -- Print the points
-    love.graphics.print("Score: " .. score, 10, 10)
-
-    -- Print the timer
-    love.graphics.print("Timer: " .. string.format("%.0f",session_time - (love.timer.getTime() - start_time)), window_w-100, 10)
-
+    hud:draw()
 
     love.graphics.setColor(0, 0, 255)
     love.graphics.rectangle("fill", pos_x, pos_y, bsize_x, bsize_y)
@@ -46,10 +40,10 @@ function love.draw()
 
     if CheckCollision(pos_x, pos_y, bsize_x, bsize_y, block_pos_x, block_pos_y, bsize_x, bsize_y) then
     	block_pos_x = love.math.random(0, window_w - bsize_x)
-    	block_pos_y = love.math.random(0, window_h - bsize_y)
+    	block_pos_y = love.math.random(30, window_h - bsize_y)
 
       -- If there's a collision with the white box, increase the score
-      score = score + 1
+      hud:increase_score(1)
     end
 end
 
@@ -75,7 +69,35 @@ function love.update()
 
 end
 
+-- Cursor Movement 
 
+function goDown()
+  if pos_y + bsize_y < window_h then
+    pos_y = pos_y + 10
+  end
+end
+
+function goUp()
+
+  if pos_y > HUD_HEIGHT then
+    pos_y = pos_y - 10
+  end
+end
+
+function goLeft()
+
+  if pos_x > 0 then
+    pos_x = pos_x - 10
+  end
+end
+
+function goRight()
+  if pos_x + bsize_x < window_w then
+    pos_x = pos_x + 10
+  end
+end
+
+-- Collision detection
 
 function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
   return x1 < x2+w2 and
@@ -83,4 +105,3 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
          y1 < y2+h2 and
          y2 < y1+h1
 end
-
