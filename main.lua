@@ -12,8 +12,6 @@ block_pos_y = 500
 window_w = love.graphics.getWidth()
 window_h = love.graphics.getHeight()
 
-text = "Press a cursor key"
-text_over = ""
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
 score = 0
@@ -32,8 +30,6 @@ function love.load()
 end
 
 function love.draw()
-    --love.graphics.print(text, 400, 300)
-    love.graphics.print(text_over, 100, 100)
 
     -- Print the points
     love.graphics.print("Score: " .. score, 10, 10)
@@ -49,15 +45,11 @@ function love.draw()
     love.graphics.rectangle("fill", block_pos_x, block_pos_y, bsize_x, bsize_y)
 
     if CheckCollision(pos_x, pos_y, bsize_x, bsize_y, block_pos_x, block_pos_y, bsize_x, bsize_y) then
-    	text_over = "OUCH!!!!!!!!"
     	block_pos_x = love.math.random(0, window_w - bsize_x)
     	block_pos_y = love.math.random(0, window_h - bsize_y)
 
       -- If there's a collision with the white box, increase the score
       score = score + 1
-
-    else
-    	text_over = ""
     end
 end
 
