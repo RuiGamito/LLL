@@ -1,5 +1,6 @@
 
 require "cursorMovement"
+require "hud"
 
 pos_x = 100
 pos_y = 200
@@ -14,29 +15,23 @@ window_h = love.graphics.getHeight()
 
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
-score = 0
-session_time = 60 -- 60 seconds to get the highest score
-
 
 -- Game Cycle Functions
 
 
 function love.load()
 
-  -- get the initial time of the session
-  start_time = love.timer.getTime()
-
+  -- initialize hud stuff
+  hud:init()
+  hud:set_start_time()
+  hud:toggle_score(true)
+  hud:toggle_timer(true)
 
 end
 
 function love.draw()
 
-    -- Print the points
-    love.graphics.print("Score: " .. score, 10, 10)
-
-    -- Print the timer
-    love.graphics.print("Timer: " .. string.format("%.0f",session_time - (love.timer.getTime() - start_time)), window_w-100, 10)
-
+    hud:draw()
 
     love.graphics.setColor(0, 0, 255)
     love.graphics.rectangle("fill", pos_x, pos_y, bsize_x, bsize_y)
@@ -49,7 +44,7 @@ function love.draw()
     	block_pos_y = love.math.random(0, window_h - bsize_y)
 
       -- If there's a collision with the white box, increase the score
-      score = score + 1
+      hud:increase_score(1)
     end
 end
 
