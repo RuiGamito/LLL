@@ -8,6 +8,8 @@ hud = {
 		CURRENT_TIME = 0
 		SCORE_ACTIVE = false
 		TIMER_ACTIVE = false
+
+		DISPLAY_WIDTH = love.graphics.getWidth()
 	end,
 
 	draw = function(self)
@@ -20,8 +22,11 @@ hud = {
     	
     	-- Print the timer
     	if TIMER_ACTIVE then
-    		love.graphics.print("Timer: " .. string.format("%.0f",SESSION_TIME - (love.timer.getTime() - INITIAL_TIME)), love.graphics.getWidth()-100, 10)
+    		love.graphics.print("Timer: " .. string.format("%.0f",SESSION_TIME - (love.timer.getTime() - INITIAL_TIME)), DISPLAY_WIDTH-100, 10)
     	end
+
+    	-- Draw hud separator
+    	love.graphics.line(0,30, DISPLAY_WIDTH,30)
 
 		love.graphics.pop()
 	end,

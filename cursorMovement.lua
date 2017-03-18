@@ -8,7 +8,7 @@ end
 
 function goUp()
 
-	if pos_y > 0 then
+	if pos_y > 30 then
 		pos_y = pos_y - 10
 	end
 end

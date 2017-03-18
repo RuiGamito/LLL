@@ -15,7 +15,6 @@ window_h = love.graphics.getHeight()
 
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
-
 -- Game Cycle Functions
 
 
@@ -25,8 +24,8 @@ function love.load()
   hud:init()
   hud:toggle_score(true)
   hud:toggle_timer(true)
-  hud:set_start_time()
   hud:set_session_time(60)
+  hud:set_start_time()
 
 end
 
@@ -42,7 +41,7 @@ function love.draw()
 
     if CheckCollision(pos_x, pos_y, bsize_x, bsize_y, block_pos_x, block_pos_y, bsize_x, bsize_y) then
     	block_pos_x = love.math.random(0, window_w - bsize_x)
-    	block_pos_y = love.math.random(0, window_h - bsize_y)
+    	block_pos_y = love.math.random(30, window_h - bsize_y)
 
       -- If there's a collision with the white box, increase the score
       hud:increase_score(1)
