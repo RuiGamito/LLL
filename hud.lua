@@ -10,6 +10,7 @@ hud = {
 		TIMER_ACTIVE = false
 
 		DISPLAY_WIDTH = love.graphics.getWidth()
+		HUD_HEIGHT = 0
 	end,
 
 	draw = function(self)
@@ -26,7 +27,7 @@ hud = {
     	end
 
     	-- Draw hud separator
-    	love.graphics.line(0,30, DISPLAY_WIDTH,30)
+    	love.graphics.line(0,HUD_HEIGHT, DISPLAY_WIDTH, HUD_HEIGHT)
 
 		love.graphics.pop()
 	end,
@@ -51,6 +52,10 @@ hud = {
 
 	toggle_timer = function(self, bool)
 		TIMER_ACTIVE = bool
+	end,
+
+	set_hud_height = function(self, height)
+		HUD_HEIGHT = height
 	end	
 } 
 

@@ -11,6 +11,8 @@ block_pos_y = 500
 window_w = love.graphics.getWidth()
 window_h = love.graphics.getHeight()
 
+hud_height = 30
+
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
 -- Game Cycle Functions
@@ -19,11 +21,11 @@ function love.load()
 
   -- initialize hud stuff
   hud:init()
+  hud:set_hud_height(hud_height)
   hud:toggle_score(true)
   hud:toggle_timer(true)
   hud:set_session_time(60)
   hud:set_start_time()
-
 end
 
 function love.draw()
@@ -77,7 +79,7 @@ end
 
 function goUp()
 
-  if pos_y > 30 then
+  if pos_y > HUD_HEIGHT then
     pos_y = pos_y - 10
   end
 end
