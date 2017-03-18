@@ -23,9 +23,10 @@ function love.load()
 
   -- initialize hud stuff
   hud:init()
-  hud:set_start_time()
   hud:toggle_score(true)
   hud:toggle_timer(true)
+  hud:set_start_time()
+  hud:set_session_time(60)
 
 end
 

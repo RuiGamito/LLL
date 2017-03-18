@@ -3,7 +3,7 @@ hud = {
 
 	init = function(self)
 		INITIAL_TIME = 0
-		SESSION_TIME = 60
+		SESSION_TIME = 0
 		CURRENT_SCORE = 0
 		CURRENT_TIME = 0
 		SCORE_ACTIVE = false
@@ -34,6 +34,10 @@ hud = {
 
 	set_start_time = function(self)
 		INITIAL_TIME = love.timer.getTime()
+	end,
+
+	set_session_time = function(self, time)
+		SESSION_TIME = time
 	end,
 
 	toggle_score = function(self, bool)
