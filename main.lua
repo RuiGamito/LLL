@@ -17,9 +17,19 @@ text_over = ""
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
 score = 0
+session_time = 60 -- 60 seconds to get the highest score
 
 
 -- Game Cycle Functions
+
+
+function love.load()
+
+  -- get the initial time of the session
+  start_time = love.timer.getTime()
+
+
+end
 
 function love.draw()
     --love.graphics.print(text, 400, 300)
@@ -27,6 +37,9 @@ function love.draw()
 
     -- Print the points
     love.graphics.print("Score: " .. score, 10, 10)
+
+    -- Print the timer
+    love.graphics.print("Timer: " .. string.format("%.0f",session_time - (love.timer.getTime() - start_time)), window_w-100, 10)
 
 
     love.graphics.setColor(0, 0, 255)
