@@ -1,5 +1,3 @@
-
-require "cursorMovement"
 require "hud"
 
 pos_x = 100
@@ -16,7 +14,6 @@ window_h = love.graphics.getHeight()
 shape_collider = love.physics.newRectangleShape(pos_x, pos_y, bsize_x, bsize_y)
 
 -- Game Cycle Functions
-
 
 function love.load()
 
@@ -70,7 +67,35 @@ function love.update()
 
 end
 
+-- Cursor Movement 
 
+function goDown()
+  if pos_y + bsize_y < window_h then
+    pos_y = pos_y + 10
+  end
+end
+
+function goUp()
+
+  if pos_y > 30 then
+    pos_y = pos_y - 10
+  end
+end
+
+function goLeft()
+
+  if pos_x > 0 then
+    pos_x = pos_x - 10
+  end
+end
+
+function goRight()
+  if pos_x + bsize_x < window_w then
+    pos_x = pos_x + 10
+  end
+end
+
+-- Collision detection
 
 function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
   return x1 < x2+w2 and
@@ -78,4 +103,3 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
          y1 < y2+h2 and
          y2 < y1+h1
 end
-
