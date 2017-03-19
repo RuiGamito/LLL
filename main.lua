@@ -22,10 +22,10 @@ STATE_MENU      = 1
 STATE_PLAY      = 2
 STATE_GAME_OVER = 3
 
+
 -- Game Cycle Functions
 
 function love.load()
-
   -- initialize HUD
   hud:init()
   hud:set_hud_height(hud_height)
@@ -84,7 +84,7 @@ end
 
 function gameStart()
   -- initialize hud stuff
-  hud:set_session_time(10)
+  hud:set_session_time(60)
   hud:toggle_score(true)
   hud:toggle_timer(true)
 end
