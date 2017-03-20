@@ -1,4 +1,5 @@
 require "hud"
+require "highscores"
 
 pos_x = 100
 pos_y = 200
@@ -29,6 +30,9 @@ function love.load()
   -- initialize HUD
   hud:init()
   hud:set_hud_height(hud_height)
+
+  -- initialize highscores
+  highscores:init()
 
   changeToState(STATE_MENU)
 end
@@ -98,7 +102,7 @@ function changeToState(state)
     hud:reset()
     gameStart()
   elseif state == STATE_GAME_OVER then
-    print("Set game over message")
+    highscores:insert_highscore(hud:get_score())
     hud:message("GAME OVER!! Press 'space' to replay")
   end
 

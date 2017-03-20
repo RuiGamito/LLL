@@ -58,6 +58,10 @@ hud = {
 		CURRENT_SCORE = CURRENT_SCORE + ammount
 	end,
 
+	get_score = function(self)
+		return CURRENT_SCORE
+	end,
+
 	set_start_time = function(self)
 		INITIAL_TIME = love.timer.getTime()
 		TIMER_OVER = false
