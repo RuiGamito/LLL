@@ -8,6 +8,7 @@ BLOCK_WIDTH = 100
 PLAYER_SAFE = 0
 PLAYER_CRUSHED = 1
 
+
 function spawnBlock()
   return {800, 0, BLOCK_WIDTH, TILE_SIZE, love.math.random(0,1000)+500, 0}
 end
@@ -16,6 +17,11 @@ function drawPlayer()
   love.graphics.setColor(100, 100, 255)
   love.graphics.rectangle("fill", player[1], player[2], player[3], player[4])
   --love.graphics.print("STATUS:" .. PLAYER_STATUS, 10, 10)
+end
+
+function drawPoints()
+  love.graphics.setColor(255, 0, 0)
+  love.graphics.print("Crushes avoided: " .. PLAYER_POINTS, 10, 100)
 end
 
 function checkPlayerCrush(block)
@@ -37,6 +43,9 @@ function love.load()
   -- Add the player
   player = {300, 550, TILE_SIZE, TILE_SIZE}
   PLAYER_STATUS = PLAYER_SAFE
+
+  -- Add PLAYER_POINTS
+  PLAYER_POINTS = 0
 end
 
 
@@ -81,6 +90,8 @@ function love.update(dt)
           PLAYER_STATUS = checkPlayerCrush(block)
         else
           -- otherwise change status to RECEDING, on the block
+          -- and a point ;)
+          PLAYER_POINTS = PLAYER_POINTS + 1
           block[6] = 2
         end
       elseif STATUS == 2 then -- if the block is receding
@@ -112,4 +123,5 @@ function love.draw()
   end
 
   drawPlayer()
+  drawPoints()
 end
