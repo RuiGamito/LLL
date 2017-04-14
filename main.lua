@@ -4,15 +4,28 @@
 --          2 -> Receding
 
 TILE_SIZE = 50
+BLOCK_WIDTH = 100
+PLAYER_SAFE = 0
+PLAYER_CRUSHED = 1
 
 function spawnBlock()
-  return {800, 0, 100, TILE_SIZE, love.math.random(0,1000)+500, 0}
+  return {800, 0, BLOCK_WIDTH, TILE_SIZE, love.math.random(0,1000)+500, 0}
 end
 
 function drawPlayer()
   love.graphics.setColor(100, 100, 255)
   love.graphics.rectangle("fill", player[1], player[2], player[3], player[4])
-  love.graphics.print("position: " .. player[1] .. " " .. player[2], 10, 10)
+  --love.graphics.print("STATUS:" .. PLAYER_STATUS, 10, 10)
+end
+
+function checkPlayerCrush(block)
+  if block[1] < player[1]+player[3] and
+     block[1] + block[3] > player[1] and
+     block[2] + block[4] > player[2] then
+       return PLAYER_CRUSHED
+  else
+       return PLAYER_SAFE
+  end
 end
 
 function love.load()
@@ -23,10 +36,16 @@ function love.load()
 
   -- Add the player
   player = {300, 550, TILE_SIZE, TILE_SIZE}
+  PLAYER_STATUS = PLAYER_SAFE
 end
 
 
 function love.update(dt)
+
+  if PLAYER_STATUS == PLAYER_CRUSHED then
+    return
+  end
+
   -- evaluate if head block is completely out of the screen (to the left)
   -- and if it is, remove it
   local first = blocks[1]
@@ -59,6 +78,7 @@ function love.update(dt)
         -- keep crushing if the block didn't hit the bottom
         if LENGTH < 800 then
           block[4] = block[4] + 80
+          PLAYER_STATUS = checkPlayerCrush(block)
         else
           -- otherwise change status to RECEDING, on the block
           block[6] = 2
