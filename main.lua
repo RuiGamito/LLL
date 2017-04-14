@@ -1,32 +1,28 @@
-
-pos_x = 500
-pos_y = 500
-bsize_x = 50
-bsize_y = 50
-
-block_pos_x = 750
-block_pos_y = 0
-
-block_size_x = 100
-block_size_y = 50
-
-local blocks = {}
-local num_blocks = 0
-
 -- BLOCK = {XX, YY, WIDTH, HEIGHT, CRUSH_TRIGGER, STATUS}
 -- STATUS = 0 -> No change
 --          1 -> Crushing
 --          2 -> Receding
 
+TILE_SIZE = 50
+
 function spawnBlock()
-  return {800, 0, block_size_x, block_size_y, love.math.random(0,1000)+500, 0}
+  return {800, 0, 100, TILE_SIZE, love.math.random(0,1000)+500, 0}
 end
 
+function drawPlayer()
+  love.graphics.setColor(100, 100, 255)
+  love.graphics.rectangle("fill", player[1], player[2], player[3], player[4])
+  love.graphics.print("position: " .. player[1] .. " " .. player[2], 10, 10)
+end
 
 function love.load()
-  local b1 = spawnBlock()
-  table.insert(blocks, b1)
+  -- create the block table
+  blocks = {}
+  table.insert(blocks, spawnBlock())
   num_blocks = 1
+
+  -- Add the player
+  player = {300, 550, TILE_SIZE, TILE_SIZE}
 end
 
 
@@ -80,6 +76,13 @@ function love.update(dt)
         block[5] = block[5] - 4
       end
   end -- for
+
+  -- create some keyboard events to control the player
+  if love.keyboard.isDown("right") then
+    player[1] = player[1] + 10
+  elseif love.keyboard.isDown("left") then
+    player[1] = player[1] - 10
+  end
 end
 
 function love.draw()
@@ -87,7 +90,6 @@ function love.draw()
       love.graphics.setColor(255 - block[5]/4, 100, 0)
       love.graphics.rectangle("fill", block[1], block[2], block[3], block[4])
   end
-  --love.graphics.setColor(0, 0, 255)
-  --love.graphics.rectangle("fill", pos_x, pos_y, bsize_x, bsize_y)
-  -- love.graphics.print("blocks " .. num_blocks, 10, 10)
+
+  drawPlayer()
 end
