@@ -110,9 +110,17 @@ function love.update(dt)
 
   -- create some keyboard events to control the player
   if love.keyboard.isDown("right") then
-    player[1] = player[1] + 10
+    if player[1]+10 > 750 then
+      player[1] = 750
+    else
+      player[1] = player[1] + 10
+    end
   elseif love.keyboard.isDown("left") then
-    player[1] = player[1] - 10
+    if player[1]-10 < 0 then
+      player[1] = 0
+    else
+      player[1] = player[1] - 10
+    end
   end
 end
 
