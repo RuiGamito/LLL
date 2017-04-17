@@ -4,10 +4,9 @@
 --          2 -> Receding
 
 TILE_SIZE = 50
-BLOCK_WIDTH = 100
+BLOCK_WIDTH = 200
 PLAYER_SAFE = 0
 PLAYER_CRUSHED = 1
-
 
 function spawnBlock()
   return {800, 0, BLOCK_WIDTH, TILE_SIZE, love.math.random(0,1000)+500, 0}
@@ -34,7 +33,7 @@ function checkPlayerCrush(block)
   end
 end
 
-function love.load()
+function resetGame()
   -- create the block table
   blocks = {}
   table.insert(blocks, spawnBlock())
@@ -48,11 +47,19 @@ function love.load()
   PLAYER_POINTS = 0
 end
 
+function love.load()
+  resetGame()
+end
+
 
 function love.update(dt)
 
   if PLAYER_STATUS == PLAYER_CRUSHED then
-    return
+    if love.keyboard.isDown("space")  then
+      resetGame()
+    else
+      return
+    end
   end
 
   -- evaluate if head block is completely out of the screen (to the left)
@@ -86,7 +93,7 @@ function love.update(dt)
       elseif STATUS == 1 then -- if the block is crushing
         -- keep crushing if the block didn't hit the bottom
         if LENGTH < 800 then
-          block[4] = block[4] + 80
+          block[4] = block[4] + 200
           PLAYER_STATUS = checkPlayerCrush(block)
         else
           -- otherwise change status to RECEDING, on the block
