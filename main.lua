@@ -7,6 +7,7 @@ TILE_SIZE = 50
 BLOCK_WIDTH = 200
 PLAYER_SAFE = 0
 PLAYER_CRUSHED = 1
+PART = {}
 
 function spawnBlock()
   return {800, 0, BLOCK_WIDTH, TILE_SIZE, love.math.random(0,1000)+500, 0}
@@ -21,6 +22,10 @@ end
 function drawPoints()
   love.graphics.setColor(255, 0, 0)
   love.graphics.print("Crushes avoided: " .. PLAYER_POINTS, 10, 100)
+end
+
+function drawParticles()
+  love.graphics.draw(pSystem, PART[1], PART[2])
 end
 
 function checkPlayerCrush(block)
@@ -49,6 +54,16 @@ end
 
 function love.load()
   resetGame()
+
+  -- PARTICLE System
+  local img = love.graphics.newImage("parts.png")
+  pSystem = love.graphics.newParticleSystem(img, 32)
+  pSystem:setSizes(0.1)
+  pSystem:setParticleLifetime(1,2)
+  --this will make your particals shoot out in diffrent directions
+  --this will make your particles look much better
+  --you can play with the numbers to make them move in diffrent directions
+  pSystem:setLinearAcceleration(-40, -40, 0, 0)
 end
 
 
@@ -98,6 +113,9 @@ function love.update(dt)
         else
           -- otherwise change status to RECEDING, on the block
           -- and a point ;)
+          pSystem:emit(32)
+          PART[1] = block[1]+block[3]/2
+          PART[2] = 600
           PLAYER_POINTS = PLAYER_POINTS + 1
           block[6] = 2
         end
@@ -128,7 +146,12 @@ function love.update(dt)
     else
       player[1] = player[1] - 10
     end
+  elseif love.keyboard.isDown("down") then
+
   end
+
+  pSystem:update(dt)
+
 end
 
 function love.draw()
@@ -139,4 +162,5 @@ function love.draw()
 
   drawPlayer()
   drawPoints()
+  drawParticles()
 end
